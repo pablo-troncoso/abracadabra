@@ -1,17 +1,45 @@
+// Importar Express
 const express = require('express');
+
+//Instanciar Express
 const app = express();
 
-app.use(express.static('assets'));
+//Levantar el Servidor
+app.listen(3000, () => {
+  console.log('Servidor iniciado en el puerto 3000');
+});
+
+//Middleware de uso General
+app.use(express.static("assets"));
+
+//Arreglo 4 Nombres
+const nombres=["Pablo", "Francisco","Juan", "Maria"];
+
+//Creación Rutas
+app.get('/abracadabra/usuarios', (req, res) => {
+  res.send({nombres});
+})
+  
+//Creación Middleware de la Segunda Ruta
+app.use("/abracadabra/juego/:usuario", (req, res) => {
+  nombres.includes(req.params.usuario) ? next() : res.redirect("/who.jpeg") 
+});
+
+
+
+//Página no existe
+app.get("*", (req, res) => {
+  //console.log("objeto res:"res);
+  res.send("Esta página no existe");
+});
+
+//
+
 
 app.get('/', (req, res) => {
   res.send('¡Bienvenido al sitio web de Abracadabra!');
 });
 
-//Usuarios
-app.get('/abracadabra/usuarios', (req, res) => {
-    const usuarios = ["Juan", "Jocelyn", "Astrid", "Maria", "Ignacia", "Javier", "Brian"];
-    res.json({ usuarios });
-  });
 
 //Hay o no Usuarios
 const validarUsuario = (req, res, next) => {
@@ -23,11 +51,8 @@ const validarUsuario = (req, res, next) => {
     }
   };
 
-// Juego
-app.use('/abracadabra/juego/:usuario', validarUsuario, (req, res) => {
-    const usuario = req.params.usuario;
-    res.send(`¡Hola ${usuario}! Estás listo para jugar.`);
-  });
+
+
 
 // Conejo
 app.get('/abracadabra/conejo/:n', (req, res) => {
@@ -40,14 +65,8 @@ app.get('/abracadabra/conejo/:n', (req, res) => {
     }
   });
 
-  app.use((req, res) => {
-    res.status(404).send('Esta página no existe...');
-  });
+ 
 
 
-//Servidor 3000
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
-});
+
 
