@@ -9,9 +9,9 @@ app.get('/', (req, res) => {
 
 //Usuarios
 app.get('/abracadabra/usuarios', (req, res) => {
-  const usuarios = ['Usuario1', 'Usuario2', 'Usuario3'];
-  res.json(usuarios);
-});
+    const usuarios = ["Juan", "Jocelyn", "Astrid", "Maria", "Ignacia", "Javier", "Brian"];
+    res.json({ usuarios });
+  });
 
 //Hay o no Usuarios
 const validarUsuario = (req, res, next) => {
